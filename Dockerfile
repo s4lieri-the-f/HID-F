@@ -1,8 +1,11 @@
 FROM node:20-alpine AS base
 
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
+FROM base AS builder
+RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 RUN npm config set audit false && \
     npm config set fund false && \
@@ -13,16 +16,15 @@ RUN npm config set audit false && \
     npm config set fetch-retry-maxtimeout 120000
 
 COPY package.json package-lock.json* ./
-RUN echo "Starting npm ci..." && \
+RUN echo "Installing dependencies in builder..." && \
     timeout 600 npm ci --no-audit --silent --prefer-offline --maxsockets 1 && \
-    echo "npm ci completed successfully"
+    echo "Dependencies installed successfully"
 
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN timeout 300 npm run build || (echo "Build timed out after 5 minutes" && exit 1)
+RUN echo "Starting build process..." && \
+    timeout 300 npm run build || (echo "Build timed out after 5 minutes" && exit 1) && \
+    echo "Build completed successfully"
 
 FROM base AS runner
 WORKDIR /app
