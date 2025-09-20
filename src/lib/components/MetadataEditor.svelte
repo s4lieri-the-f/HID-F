@@ -119,12 +119,16 @@
   let localMetadata = { ...script.metadata };
   let nameInput: HTMLInputElement;
   let overlayMouseDownTarget: EventTarget | null = null;
+  let isEditingName = false;
+  let nameDisplayElement: HTMLElement;
+  
   $: if (script && !isOpen) {
     localMetadata = { ...script.metadata };
   }
 
-  $: if (isOpen && nameInput) {
+  $: if (isOpen && nameInput && isEditingName) {
     nameInput.focus();
+    nameInput.select();
   }
 
   function handleSave() {
@@ -139,7 +143,27 @@
 
   function handleCancel() {
     localMetadata = { ...script.metadata };
+    isEditingName = false;
     isOpen = false;
+  }
+
+  function startEditingName() {
+    isEditingName = true;
+  }
+
+  function stopEditingName() {
+    isEditingName = false;
+  }
+
+  function handleNameKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      stopEditingName();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      localMetadata.name = script.metadata.name; // Reset to original
+      stopEditingName();
+    }
   }
 
   function handleOverlayMouseDown(event: MouseEvent) {
@@ -180,13 +204,56 @@
 </script>
 
 {#if isOpen}
-  <div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 cyber-fade-in" on:mousedown={handleOverlayMouseDown} on:click={handleOverlayClick}>
-    <div class="cyber-modal cyber-modal-enter p-6 w-full max-w-md mx-4" on:click|stopPropagation>
+  <div 
+    class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 cyber-fade-in" 
+    on:mousedown={handleOverlayMouseDown} 
+    on:click={handleOverlayClick}
+    on:keydown={(e) => e.key === 'Escape' && handleCancel()}
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    tabindex="-1"
+  >
+    <div 
+      class="cyber-modal cyber-modal-enter p-6 w-full max-w-md mx-4" 
+      on:click|stopPropagation
+      on:keydown|stopPropagation
+      role="document"
+    >
       <div class="flex items-center justify-between mb-4">
-        <h2 class="cyber-title text-lg cyber-text-glow flex items-center">
-          <Edit3 class="w-5 h-5 mr-2" />
-          [ SCRIPT METADATA ]
-        </h2>
+        <div class="flex items-center flex-1 min-w-0">
+          <h2 id="modal-title" class="cyber-title text-lg cyber-text-glow flex items-center min-w-0">
+            <Edit3 class="w-5 h-5 mr-2 flex-shrink-0" />
+            <div class="flex items-center min-w-0">
+              <span class="cyber-text text-red-400 text-lg flex-shrink-0">[</span>
+              <div class="min-w-0 flex-1 overflow-hidden">
+                {#if isEditingName}
+                  <input
+                    bind:this={nameInput}
+                    bind:value={localMetadata.name}
+                    on:keydown={handleNameKeyDown}
+                    on:blur={stopEditingName}
+                    type="text"
+                    class="cyber-title text-lg cyber-text-glow bg-transparent border-none outline-none px-1 py-0 w-full"
+                  />
+                {:else}
+                  <button 
+                    bind:this={nameDisplayElement}
+                    on:click={startEditingName}
+                    on:keydown={(e) => e.key === 'Enter' && startEditingName()}
+                    class="cyber-title text-lg cyber-text-glow cursor-pointer hover:text-red-400 px-1 py-0 bg-transparent border-none outline-none transition-colors duration-200 w-full text-left truncate"
+                    title="Click to edit name"
+                    type="button"
+                    aria-label="Edit script name"
+                  >
+                    {localMetadata.name || 'UNNAMED SCRIPT'}
+                  </button>
+                {/if}
+              </div>
+              <span class="cyber-text text-red-400 text-lg flex-shrink-0">]</span>
+            </div>
+          </h2>
+        </div>
         <button 
           on:click={handleCancel}
           on:mouseenter={handleButtonHover}
@@ -199,22 +266,6 @@
       </div>
 
       <form on:submit|preventDefault={handleSave} class="space-y-4">
-        <div>
-          <label for="script-name" class="cyber-label block mb-2">
-            [ SCRIPT NAME ]
-          </label>
-          <input
-            id="script-name"
-            bind:this={nameInput}
-            bind:value={localMetadata.name}
-            on:keydown={handleKeyDown}
-            type="text"
-            placeholder="ENTER SCRIPT NAME..."
-            class="cyber-input w-full"
-            required
-          />
-        </div>
-
         <div>
           <label for="script-filename" class="cyber-label block mb-2">
             [ EXPORT FILENAME ]
