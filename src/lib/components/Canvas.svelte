@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Node, Connection, DuckyScript } from '../types/nodes.js';
+  import type { ValidationError } from '../utils/compiler.js';
   import { generateNodeId, generateConnectionId } from '../utils/fileOperations.js';
   import { DEFAULT_NODE_WIDTH, DEFAULT_NODE_HEIGHT, getConnectionPoints } from '../utils/pathCalculation.js';
   import { createEventDispatcher } from 'svelte';
@@ -7,8 +8,18 @@
   import ConnectionComponent from './Connection.svelte';
 
   export let script: DuckyScript;
+  export let validationErrors: ValidationError[] = [];
+  export let supportsAdvancedNodes = true;
 
   const dispatch = createEventDispatcher();
+
+  function getNodeErrors(nodeId: string): ValidationError[] {
+    return validationErrors.filter(error => error.nodeIds?.includes(nodeId));
+  }
+
+  function hasNodeErrors(nodeId: string): boolean {
+    return getNodeErrors(nodeId).length > 0;
+  }
 
   let canvas: HTMLDivElement;
   let isDragging = false;
@@ -302,7 +313,7 @@
 
 <div
   bind:this={canvas}
-  class="canvas relative w-full h-full overflow-hidden cursor-default select-none"
+  class="canvas canvas-container relative w-full h-full overflow-hidden cursor-default select-none"
   on:mousedown={handleCanvasMouseDown}
   on:keydown={handleKeyDown}
   on:contextmenu={(e) => e.preventDefault()}
@@ -371,10 +382,11 @@
   </svg>
 
   <div class="absolute inset-0" style="z-index: 2; transform: translate({canvasOffset.x}px, {canvasOffset.y}px);">
-    {#each script.nodes as node (node.id)}
+    {#each script.nodes.filter(node => supportsAdvancedNodes || !['loop', 'condition'].includes(node.type)) as node (node.id)}
       <NodeComponent
         {node}
         selected={selectedNodes.has(node.id)}
+        hasErrors={hasNodeErrors(node.id)}
         on:select={handleNodeSelect}
         on:edit={handleNodeEdit}
         on:connectionStart={handleConnectionStart}

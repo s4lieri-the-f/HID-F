@@ -6,6 +6,7 @@
 
   export let node: NodeType;
   export let selected = false;
+  export let hasErrors = false;
 
   const dispatch = createEventDispatcher();
   
@@ -119,7 +120,7 @@
 
 <div
   bind:this={nodeElement}
-  class="node cyber-node absolute select-none cursor-move min-w-28 transition-all duration-300 {selected ? 'selected' : ''}"
+  class="node cyber-node absolute select-none cursor-move min-w-28 transition-all duration-300 {selected ? 'selected' : ''} {hasErrors ? 'error-highlight' : ''}"
   style="left: {node.x}px; top: {node.y}px; z-index: {selected ? 10 : 1}; width: fit-content; min-width: 112px;"
   on:mousedown={handleMouseDown}
   on:dblclick={handleDoubleClick}

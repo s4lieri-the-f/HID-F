@@ -176,6 +176,75 @@ body {
       inset 0 0 5px rgba(255, 0, 60, 0.1);
   }
 
+  .cyber-select {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--cyber-red);
+    color: var(--cyber-text);
+    font-family: "JetBrains Mono", monospace;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff003c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 32px;
+  }
+
+  .cyber-select:focus {
+    outline: none;
+    border-color: var(--cyber-red);
+    box-shadow:
+      0 0 10px rgba(255, 0, 60, 0.5),
+      inset 0 0 5px rgba(255, 0, 60, 0.1);
+  }
+
+  .cyber-select:hover {
+    border-color: var(--cyber-red);
+    box-shadow: 0 0 5px rgba(255, 0, 60, 0.3);
+  }
+
+  .cyber-select option {
+    background: var(--cyber-bg);
+    color: var(--cyber-text);
+    padding: 8px;
+  }
+
+  .cyber-number-input {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--cyber-red);
+    color: var(--cyber-text);
+    font-family: "JetBrains Mono", monospace;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    text-align: center;
+  }
+
+  .cyber-number-input:focus {
+    outline: none;
+    border-color: var(--cyber-red);
+    box-shadow:
+      0 0 10px rgba(255, 0, 60, 0.5),
+      inset 0 0 5px rgba(255, 0, 60, 0.1);
+  }
+
+  .cyber-number-input:hover {
+    border-color: var(--cyber-red);
+    box-shadow: 0 0 5px rgba(255, 0, 60, 0.3);
+  }
+
+  .cyber-number-input::-webkit-outer-spin-button,
+  .cyber-number-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .cyber-number-input[type=number] {
+    -moz-appearance: textfield;
+  }
+
   .cyber-checkbox {
     appearance: none;
     width: 18px;
@@ -524,6 +593,519 @@ body {
   .cyber-input {
     border-width: 2px;
   }
+}
+
+/* Error highlighting for nodes with validation errors */
+.error-highlight {
+  border: 2px solid #ff003c !important;
+  box-shadow: 
+    0 0 10px rgba(255, 0, 60, 0.5),
+    inset 0 0 10px rgba(255, 0, 60, 0.1) !important;
+  animation: error-pulse 2s infinite;
+}
+
+@keyframes error-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px rgba(255, 0, 60, 0.5),
+      inset 0 0 10px rgba(255, 0, 60, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px rgba(255, 0, 60, 0.8),
+      inset 0 0 15px rgba(255, 0, 60, 0.2);
+  }
+}
+
+/* Flipper Zero Mode Styling - E-ink display look */
+.flipper-mode,
+.flipper-mode * {
+  font-family: 'Courier New', monospace !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+.flipper-mode {
+  background: #ff8c00 !important; /* Orange e-ink background */
+  border: 1px solid #8b4513 !important; /* Brown border like e-ink */
+  box-shadow: none !important; /* Remove all glows and shadows */
+  image-rendering: pixelated !important;
+  image-rendering: -moz-crisp-edges !important;
+  image-rendering: crisp-edges !important;
+}
+
+.flipper-mode .cyber-panel {
+  background: #ff8c00 !important; /* Orange background */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+.flipper-mode .cyber-title {
+  color: #8b4513 !important; /* Brown-gray text like e-ink */
+  text-shadow: none !important; /* Remove all text shadows */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-text {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-label {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-button {
+  background: #ff8c00 !important; /* Orange background */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  color: #8b4513 !important; /* Brown-gray text */
+  box-shadow: none !important; /* Remove all shadows */
+  text-transform: none !important;
+  font-weight: normal !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-button:hover {
+  background: #ff8c00 !important; /* Keep same background, no graying */
+  color: #8b4513 !important;
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+.flipper-mode .cyber-number-input,
+.flipper-mode .cyber-select {
+  background: #ff8c00 !important; /* Orange background */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  color: #8b4513 !important; /* Brown-gray text */
+  box-shadow: none !important; /* Remove all shadows */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-number-input:focus,
+.flipper-mode .cyber-select:focus {
+  box-shadow: none !important; /* Remove all shadows */
+  border: 2px solid #8b4513 !important; /* Thicker border on focus */
+}
+
+.flipper-mode .cyber-number-input:hover,
+.flipper-mode .cyber-select:hover {
+  box-shadow: none !important; /* Remove all shadows */
+  background: #ff8c00 !important; /* Keep same background, no graying */
+}
+
+.flipper-mode .cyber-node {
+  background: #ff8c00 !important; /* Orange background */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+.flipper-mode .cyber-node.selected {
+  border: 2px solid #8b4513 !important; /* Thicker border when selected */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+/* Node modals and editor styling in Flipper mode */
+.flipper-mode .cyber-modal {
+  background: #ff8c00 !important; /* Orange background */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+.flipper-mode .cyber-modal .cyber-title {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-shadow: none !important; /* Remove all text shadows */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-modal .cyber-text {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-modal .cyber-label {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-modal .cyber-button {
+  background: #ff8c00 !important; /* Orange background */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  color: #8b4513 !important; /* Brown-gray text */
+  box-shadow: none !important; /* Remove all shadows */
+  text-transform: none !important;
+  font-weight: normal !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-modal .cyber-button:hover {
+  background: #ff8c00 !important; /* Keep same background */
+  color: #8b4513 !important;
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+.flipper-mode .cyber-modal .cyber-input,
+.flipper-mode .cyber-modal .cyber-textarea,
+.flipper-mode .cyber-modal .cyber-select,
+.flipper-mode .cyber-modal .cyber-number-input {
+  background: #ff8c00 !important; /* Orange background */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  color: #8b4513 !important; /* Brown-gray text */
+  box-shadow: none !important; /* Remove all shadows */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-modal .cyber-input:focus,
+.flipper-mode .cyber-modal .cyber-textarea:focus,
+.flipper-mode .cyber-modal .cyber-select:focus,
+.flipper-mode .cyber-modal .cyber-number-input:focus {
+  box-shadow: none !important; /* Remove all shadows */
+  border: 2px solid #8b4513 !important; /* Thicker border on focus */
+}
+
+.flipper-mode .cyber-modal .cyber-input:hover,
+.flipper-mode .cyber-modal .cyber-textarea:hover,
+.flipper-mode .cyber-modal .cyber-select:hover,
+.flipper-mode .cyber-modal .cyber-number-input:hover {
+  box-shadow: none !important; /* Remove all shadows */
+  background: #ff8c00 !important; /* Keep same background, no graying */
+}
+
+/* Node content styling */
+.flipper-mode .cyber-node .cyber-label {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-node .cyber-text {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+/* Canvas background in Flipper mode */
+.flipper-mode .canvas-container,
+.flipper-mode .flex-1 {
+  background: #ff8c00 !important; /* Orange background */
+}
+
+/* Ensure canvas has proper background in normal mode */
+.canvas-container {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 0, 60, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #111111 100%) !important;
+}
+
+/* SVG canvas background in Flipper mode - keep grid visible */
+.flipper-mode svg {
+  background: transparent !important;
+}
+
+/* Ensure grid pattern is visible in Flipper mode - e-ink style */
+.flipper-mode svg pattern path {
+  stroke: rgba(51, 51, 51, 0.2) !important; /* Dark gray, very subtle */
+  stroke-width: 1 !important;
+}
+
+/* Make sure grid is visible in normal mode too */
+svg pattern path {
+  stroke: rgba(255, 0, 60, 0.1) !important;
+  stroke-width: 1 !important;
+}
+
+/* Ensure grid SVG is visible */
+.canvas-container svg {
+  display: block !important;
+  position: relative !important;
+  z-index: 0 !important;
+}
+
+/* Canvas text styling in Flipper mode */
+.flipper-mode .canvas-container .cyber-title {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-shadow: none !important; /* Remove all text shadows */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .canvas-container .cyber-label {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .canvas-container .cyber-text {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+/* Footer styling in Flipper mode */
+.flipper-mode .cyber-panel {
+  background: #ff8c00 !important; /* Orange background */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+/* Ensure footer text is visible in Flipper mode */
+.flipper-mode .cyber-panel .cyber-text {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-panel .cyber-status-info {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-status-info {
+  color: #8b4513 !important; /* Brown-gray text */
+  text-transform: none !important;
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-text-glow {
+  text-shadow: none !important; /* Remove all text shadows */
+}
+
+/* Remove brackets and uppercase from buttons in Flipper mode */
+.flipper-mode .cyber-button span {
+  text-transform: none !important;
+}
+
+/* Hide brackets in Flipper mode */
+.flipper-mode .cyber-button::before,
+.flipper-mode .cyber-button::after {
+  display: none !important;
+}
+
+/* Fix node styling in Flipper mode - remove all red colors */
+.flipper-mode .cyber-node {
+  background: #f8f8f8 !important; /* E-ink white */
+  border: 1px solid #333 !important; /* Dark gray border */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+/* Fix node header (the colored top part) */
+.flipper-mode .cyber-node .flex.items-center {
+  background: #ff8c00 !important; /* Orange header */
+  color: #8b4513 !important; /* Brown text for contrast */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+/* Fix node content (the bottom part) */
+.flipper-mode .cyber-node .cyber-glass {
+  background: #ff8c00 !important; /* Orange background */
+  color: #8b4513 !important; /* Brown-gray text */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+/* Fix node text colors */
+.flipper-mode .cyber-node .cyber-text,
+.flipper-mode .cyber-node .cyber-label {
+  color: #8b4513 !important; /* Brown-gray text */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+/* Fix node icon and text */
+.flipper-mode .cyber-node span {
+  color: #8b4513 !important; /* Brown-gray text */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+/* Completely remove all red background classes in Flipper mode */
+.flipper-mode .bg-red-800,
+.flipper-mode .bg-red-700,
+.flipper-mode .bg-red-600,
+.flipper-mode .bg-red-900,
+.flipper-mode .bg-red-500,
+.flipper-mode .bg-red-400,
+.flipper-mode .bg-red-300,
+.flipper-mode .bg-red-200,
+.flipper-mode .bg-red-100 {
+  background: #ff8c00 !important; /* Orange background */
+  color: #8b4513 !important; /* Brown text for contrast */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+/* Remove all cyber-glow classes in Flipper mode */
+.flipper-mode .cyber-glow,
+.flipper-mode .cyber-glow-red,
+.flipper-mode .cyber-glow-blue,
+.flipper-mode .cyber-glow-green,
+.flipper-mode .cyber-glow-yellow,
+.flipper-mode .cyber-glow-purple,
+.flipper-mode .cyber-glow-cyan {
+  box-shadow: none !important; /* Remove all glow effects */
+  text-shadow: none !important; /* Remove all text shadows */
+  filter: none !important; /* Remove all filters */
+}
+
+/* Remove any remaining red colors in Flipper mode */
+.flipper-mode [class*="red"],
+.flipper-mode [class*="bg-red"],
+.flipper-mode [class*="text-red"],
+.flipper-mode [class*="border-red"] {
+  background: #ff8c00 !important; /* Orange background */
+  color: #8b4513 !important; /* Brown text for contrast */
+  border-color: #8b4513 !important; /* Brown border */
+  box-shadow: none !important; /* Remove all shadows */
+  text-shadow: none !important; /* Remove all text shadows */
+}
+
+/* Remove any remaining glow effects in Flipper mode */
+.flipper-mode [class*="glow"],
+.flipper-mode [class*="shadow"] {
+  box-shadow: none !important; /* Remove all shadows */
+  text-shadow: none !important; /* Remove all text shadows */
+  filter: none !important; /* Remove all filters */
+}
+
+/* Fix toolbar node type buttons in Flipper mode */
+.flipper-mode .cyber-button.bg-red-800,
+.flipper-mode .cyber-button.bg-red-700,
+.flipper-mode .cyber-button.bg-red-600,
+.flipper-mode .cyber-button.bg-red-900,
+.flipper-mode .cyber-button.bg-red-500 {
+  background: #ff8c00 !important; /* Orange background */
+  color: #8b4513 !important; /* Brown text for contrast */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+.flipper-mode .cyber-button.bg-red-800:hover,
+.flipper-mode .cyber-button.bg-red-700:hover,
+.flipper-mode .cyber-button.bg-red-600:hover,
+.flipper-mode .cyber-button.bg-red-900:hover,
+.flipper-mode .cyber-button.bg-red-500:hover {
+  background: #ff8c00 !important; /* Keep orange background on hover */
+  color: #8b4513 !important; /* Keep brown text on hover */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+/* Fix connection points in Flipper mode */
+.flipper-mode .connection-point {
+  background: #8b4513 !important; /* Brown */
+  border-color: #8b4513 !important; /* Brown border */
+}
+
+.flipper-mode .connection-point:hover {
+  background: #a0522d !important; /* Slightly lighter brown on hover */
+  border-color: #a0522d !important;
+}
+
+/* Remove all hover effects in Flipper mode (except connection points) */
+.flipper-mode .cyber-button:hover,
+.flipper-mode .cyber-node:hover,
+.flipper-mode .cyber-panel:hover,
+.flipper-mode .cyber-modal:hover,
+.flipper-mode .cyber-text:hover,
+.flipper-mode .cyber-label:hover,
+.flipper-mode .cyber-title:hover,
+.flipper-mode .cyber-status-info:hover {
+  background: inherit !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+/* Remove red text glow effects in Flipper mode */
+.flipper-mode .cyber-text-glow {
+  text-shadow: none !important;
+}
+
+.flipper-mode .cyber-text-glow:hover {
+  text-shadow: none !important;
+}
+
+/* Fix text field colors in Flipper mode */
+.flipper-mode input,
+.flipper-mode textarea,
+.flipper-mode select {
+  background: #ff8c00 !important; /* Orange background */
+  color: #8b4513 !important; /* Brown-gray text */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode input:focus,
+.flipper-mode textarea:focus,
+.flipper-mode select:focus {
+  background: #ff8c00 !important; /* Orange background */
+  color: #8b4513 !important; /* Brown-gray text */
+  border: 2px solid #8b4513 !important; /* Thicker border on focus */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+/* Fix modal text areas specifically */
+.flipper-mode .cyber-modal input,
+.flipper-mode .cyber-modal textarea,
+.flipper-mode .cyber-modal select {
+  background: #ff8c00 !important; /* Orange background */
+  color: #8b4513 !important; /* Brown-gray text */
+  border: 1px solid #8b4513 !important; /* Brown border */
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated !important;
+}
+
+.flipper-mode .cyber-modal input:focus,
+.flipper-mode .cyber-modal textarea:focus,
+.flipper-mode .cyber-modal select:focus {
+  background: #ff8c00 !important; /* Orange background */
+  color: #8b4513 !important; /* Brown-gray text */
+  border: 2px solid #8b4513 !important; /* Thicker border on focus */
+  box-shadow: none !important; /* Remove all shadows */
+}
+
+/* Add pixelation effect to Flipper mode */
+.flipper-mode {
+  image-rendering: pixelated !important;
+  image-rendering: -moz-crisp-edges !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: -webkit-optimize-contrast !important;
+}
+
+.flipper-mode * {
+  image-rendering: pixelated !important;
+  image-rendering: -moz-crisp-edges !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: -webkit-optimize-contrast !important;
 }
 
 @media print {

@@ -1,7 +1,11 @@
 import type { DuckyScript } from "../types/nodes.js";
 
-export function saveProjectAsJson(script: DuckyScript): void {
-  const jsonString = JSON.stringify(script, null, 2);
+export function saveProjectAsJson(script: DuckyScript, settings?: { defaultDelay: number; duckyVersion: number }): void {
+  const projectData = {
+    ...script,
+    settings: settings || { defaultDelay: 10, duckyVersion: 3 }
+  };
+  const jsonString = JSON.stringify(projectData, null, 2);
   const filename = script.metadata.filename || script.metadata.name;
   downloadFile(jsonString, `${filename}.json`, "application/json");
 }
@@ -14,13 +18,30 @@ export function saveScriptAsTxt(
   downloadFile(compiledContent, `${filename}.txt`, "text/plain");
 }
 
-export function loadProjectFromJson(file: File): Promise<DuckyScript> {
+export function loadProjectFromJson(file: File): Promise<{ script: DuckyScript; settings?: { defaultDelay: number; duckyVersion: number } }> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
         const content = e.target?.result as string;
-        const script = JSON.parse(content) as DuckyScript;
+        const data = JSON.parse(content);
+
+        // Handle both old format (just DuckyScript) and new format (with settings)
+        let script: DuckyScript;
+        let settings: { defaultDelay: number; duckyVersion: number } | undefined;
+
+        if (data.nodes && data.connections && data.metadata) {
+          // New format with settings
+          script = data as DuckyScript;
+          settings = data.settings;
+        } else if (data.script) {
+          // Alternative new format
+          script = data.script;
+          settings = data.settings;
+        } else {
+          // Old format - just the script
+          script = data as DuckyScript;
+        }
 
         if (!script.nodes || !script.connections || !script.metadata) {
           throw new Error("Invalid project file format");
@@ -35,7 +56,7 @@ export function loadProjectFromJson(file: File): Promise<DuckyScript> {
               .substring(0, 50) || "script";
         }
 
-        resolve(script);
+        resolve({ script, settings });
       } catch (error) {
         reject(
           new Error(

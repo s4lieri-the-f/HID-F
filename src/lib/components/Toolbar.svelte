@@ -15,7 +15,7 @@
     FolderOpen,
     Download,
     FileText,
-    Trash2,
+    Settings,
     Play
   } from 'lucide-svelte';
 
@@ -144,6 +144,9 @@
   }
 
   export let script: any;
+  export let hasValidationErrors = false;
+  export let supportsAdvancedNodes = true;
+  export let isFlipperMode = false;
 
   const dispatch = createEventDispatcher();
 
@@ -238,24 +241,27 @@
     dispatch('previewScript');
   }
 
-  function clearAll() {
-    if (confirm('Are you sure you want to clear all nodes? This action cannot be undone.')) {
-      dispatch('clearAll');
-    }
+  function openSettings() {
+    dispatch('openSettings');
   }
 
   function openMetadataEditor() {
     dispatch('openMetadataEditor');
   }
 
-  const nodeTypes = [
-    { type: 'command', icon: Command, label: 'CMD', color: 'bg-red-800' },
-    { type: 'key_combination', icon: Keyboard, label: 'KEY', color: 'bg-red-700' },
-    { type: 'text_input', icon: Type, label: 'TXT', color: 'bg-red-600' },
-    { type: 'delay', icon: Clock, label: 'DLY', color: 'bg-red-900' },
-    { type: 'loop', icon: Repeat, label: 'RPT', color: 'bg-red-800' },
-    { type: 'condition', icon: GitBranch, label: 'IF', color: 'bg-red-500' }
+  const allNodeTypes = [
+    { type: 'command', icon: Command, label: 'CMD', fullLabel: 'Command', color: 'bg-red-800' },
+    { type: 'key_combination', icon: Keyboard, label: 'KEY', fullLabel: 'Key', color: 'bg-red-700' },
+    { type: 'text_input', icon: Type, label: 'TXT', fullLabel: 'Text', color: 'bg-red-600' },
+    { type: 'delay', icon: Clock, label: 'DLY', fullLabel: 'Delay', color: 'bg-red-900' },
+    { type: 'loop', icon: Repeat, label: 'RPT', fullLabel: 'Loop', color: 'bg-red-800' },
+    { type: 'condition', icon: GitBranch, label: 'IF', fullLabel: 'If', color: 'bg-red-500' }
   ] as const;
+  
+  // Filter node types based on version support
+  $: nodeTypes = supportsAdvancedNodes 
+    ? allNodeTypes 
+    : allNodeTypes.filter(nodeType => !['loop', 'condition'].includes(nodeType.type));
 </script>
 
 <div class="toolbar cyber-panel p-2 flex flex-wrap items-center justify-between gap-1">
@@ -315,10 +321,10 @@
         on:mouseenter={handleButtonHover}
         on:mouseleave={handleButtonLeave}
         class="cyber-button text-xs {nodeType.color}"
-        title="{nodeType.label}"
+        title="{isFlipperMode ? nodeType.fullLabel : nodeType.label}"
       >
         <svelte:component this={nodeType.icon} size={12} />
-        <span class="hidden lg:inline">{nodeType.label}</span>
+        <span class="hidden lg:inline">{isFlipperMode ? nodeType.fullLabel : nodeType.label}</span>
       </button>
     {/each}
   </div>
@@ -331,21 +337,24 @@
       on:mouseenter={handleButtonHover}
       on:mouseleave={handleButtonLeave}
       class="cyber-button text-xs"
-      title="Preview"
+      class:opacity-50={hasValidationErrors}
+      class:cursor-not-allowed={hasValidationErrors}
+      disabled={hasValidationErrors}
+      title={hasValidationErrors ? "Fix validation errors to preview" : "Preview"}
     >
       <FileText size={14} />
       <span class="hidden sm:inline">VIEW</span>
     </button>
 
     <button
-      on:click={clearAll}
+      on:click={openSettings}
       on:mouseenter={handleButtonHover}
       on:mouseleave={handleButtonLeave}
       class="cyber-button text-xs"
-      title="Clear"
+      title="Settings"
     >
-      <Trash2 size={14} />
-      <span class="hidden sm:inline">CLEAR</span>
+      <Settings size={14} />
+      <span class="hidden sm:inline">SETTINGS</span>
     </button>
   </div>
   </div>
@@ -360,7 +369,6 @@
     >
       {script.metadata.name}
     </button>
-    <div class="text-xs text-red-400 cyber-text">{new Date(script.metadata.modified).toLocaleTimeString()}</div>
   </div>
 </div>
 
