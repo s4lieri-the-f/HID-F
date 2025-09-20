@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: hub.docker.io
+  REGISTRY: docker.io
   IMAGE_NAME: "s4lier1/hid-f"
 
 jobs:
