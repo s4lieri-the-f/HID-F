@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: docker.io
-  IMAGE_NAME: ${{ github.repository }}
+  REGISTRY: hub.docker.io
+  IMAGE_NAME: "s4lier1/hid-f"
 
 jobs:
   test:
