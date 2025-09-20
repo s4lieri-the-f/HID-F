@@ -5,7 +5,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production
+RUN npm ci
 
 FROM base AS builder
 WORKDIR /app
@@ -24,7 +24,8 @@ RUN adduser --system --uid 1001 sveltekit
 
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/package.json ./package.json
-COPY --from=deps /app/node_modules ./node_modules
+
+RUN npm ci --only=production && npm cache clean --force
 
 RUN chown -R sveltekit:nodejs /app
 USER sveltekit
