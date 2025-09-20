@@ -1,28 +1,104 @@
-import type { Node, Connection, DuckyScript } from '../types/nodes.js';
+import type { Node, Connection, DuckyScript } from "../types/nodes.js";
 
 const ALT_CODE_MAP: Record<string, string> = {
-  'A': 'ALTCHAR 65', 'B': 'ALTCHAR 66', 'C': 'ALTCHAR 67', 'D': 'ALTCHAR 68', 'E': 'ALTCHAR 69',
-  'F': 'ALTCHAR 70', 'G': 'ALTCHAR 71', 'H': 'ALTCHAR 72', 'I': 'ALTCHAR 73', 'J': 'ALTCHAR 74',
-  'K': 'ALTCHAR 75', 'L': 'ALTCHAR 76', 'M': 'ALTCHAR 77', 'N': 'ALTCHAR 78', 'O': 'ALTCHAR 79',
-  'P': 'ALTCHAR 80', 'Q': 'ALTCHAR 81', 'R': 'ALTCHAR 82', 'S': 'ALTCHAR 83', 'T': 'ALTCHAR 84',
-  'U': 'ALTCHAR 85', 'V': 'ALTCHAR 86', 'W': 'ALTCHAR 87', 'X': 'ALTCHAR 88', 'Y': 'ALTCHAR 89', 'Z': 'ALTCHAR 90',
-  
-  'a': 'ALTCHAR 97', 'b': 'ALTCHAR 98', 'c': 'ALTCHAR 99', 'd': 'ALTCHAR 100', 'e': 'ALTCHAR 101',
-  'f': 'ALTCHAR 102', 'g': 'ALTCHAR 103', 'h': 'ALTCHAR 104', 'i': 'ALTCHAR 105', 'j': 'ALTCHAR 106',
-  'k': 'ALTCHAR 107', 'l': 'ALTCHAR 108', 'm': 'ALTCHAR 109', 'n': 'ALTCHAR 110', 'o': 'ALTCHAR 111',
-  'p': 'ALTCHAR 112', 'q': 'ALTCHAR 113', 'r': 'ALTCHAR 114', 's': 'ALTCHAR 115', 't': 'ALTCHAR 116',
-  'u': 'ALTCHAR 117', 'v': 'ALTCHAR 118', 'w': 'ALTCHAR 119', 'x': 'ALTCHAR 120', 'y': 'ALTCHAR 121', 'z': 'ALTCHAR 122',
-  
-  '0': 'ALTCHAR 48', '1': 'ALTCHAR 49', '2': 'ALTCHAR 50', '3': 'ALTCHAR 51', '4': 'ALTCHAR 52',
-  '5': 'ALTCHAR 53', '6': 'ALTCHAR 54', '7': 'ALTCHAR 55', '8': 'ALTCHAR 56', '9': 'ALTCHAR 57',
-  
-  ' ': 'ALTCHAR 32', '!': 'ALTCHAR 33', '"': 'ALTCHAR 34', '#': 'ALTCHAR 35', '$': 'ALTCHAR 36',
-  '%': 'ALTCHAR 37', '&': 'ALTCHAR 38', "'": 'ALTCHAR 39', '(': 'ALTCHAR 40', ')': 'ALTCHAR 41',
-  '*': 'ALTCHAR 42', '+': 'ALTCHAR 43', ',': 'ALTCHAR 44', '-': 'ALTCHAR 45', '.': 'ALTCHAR 46',
-  '/': 'ALTCHAR 47', ':': 'ALTCHAR 58', ';': 'ALTCHAR 59', '<': 'ALTCHAR 60', '=': 'ALTCHAR 61',
-  '>': 'ALTCHAR 62', '?': 'ALTCHAR 63', '@': 'ALTCHAR 64', '[': 'ALTCHAR 91', '\\': 'ALTCHAR 92',
-  ']': 'ALTCHAR 93', '^': 'ALTCHAR 94', '_': 'ALTCHAR 95', '`': 'ALTCHAR 96', '{': 'ALTCHAR 123',
-  '|': 'ALTCHAR 124', '}': 'ALTCHAR 125', '~': 'ALTCHAR 126',
+  A: "ALTCHAR 65",
+  B: "ALTCHAR 66",
+  C: "ALTCHAR 67",
+  D: "ALTCHAR 68",
+  E: "ALTCHAR 69",
+  F: "ALTCHAR 70",
+  G: "ALTCHAR 71",
+  H: "ALTCHAR 72",
+  I: "ALTCHAR 73",
+  J: "ALTCHAR 74",
+  K: "ALTCHAR 75",
+  L: "ALTCHAR 76",
+  M: "ALTCHAR 77",
+  N: "ALTCHAR 78",
+  O: "ALTCHAR 79",
+  P: "ALTCHAR 80",
+  Q: "ALTCHAR 81",
+  R: "ALTCHAR 82",
+  S: "ALTCHAR 83",
+  T: "ALTCHAR 84",
+  U: "ALTCHAR 85",
+  V: "ALTCHAR 86",
+  W: "ALTCHAR 87",
+  X: "ALTCHAR 88",
+  Y: "ALTCHAR 89",
+  Z: "ALTCHAR 90",
+
+  a: "ALTCHAR 97",
+  b: "ALTCHAR 98",
+  c: "ALTCHAR 99",
+  d: "ALTCHAR 100",
+  e: "ALTCHAR 101",
+  f: "ALTCHAR 102",
+  g: "ALTCHAR 103",
+  h: "ALTCHAR 104",
+  i: "ALTCHAR 105",
+  j: "ALTCHAR 106",
+  k: "ALTCHAR 107",
+  l: "ALTCHAR 108",
+  m: "ALTCHAR 109",
+  n: "ALTCHAR 110",
+  o: "ALTCHAR 111",
+  p: "ALTCHAR 112",
+  q: "ALTCHAR 113",
+  r: "ALTCHAR 114",
+  s: "ALTCHAR 115",
+  t: "ALTCHAR 116",
+  u: "ALTCHAR 117",
+  v: "ALTCHAR 118",
+  w: "ALTCHAR 119",
+  x: "ALTCHAR 120",
+  y: "ALTCHAR 121",
+  z: "ALTCHAR 122",
+
+  "0": "ALTCHAR 48",
+  "1": "ALTCHAR 49",
+  "2": "ALTCHAR 50",
+  "3": "ALTCHAR 51",
+  "4": "ALTCHAR 52",
+  "5": "ALTCHAR 53",
+  "6": "ALTCHAR 54",
+  "7": "ALTCHAR 55",
+  "8": "ALTCHAR 56",
+  "9": "ALTCHAR 57",
+
+  " ": "ALTCHAR 32",
+  "!": "ALTCHAR 33",
+  '"': "ALTCHAR 34",
+  "#": "ALTCHAR 35",
+  $: "ALTCHAR 36",
+  "%": "ALTCHAR 37",
+  "&": "ALTCHAR 38",
+  "'": "ALTCHAR 39",
+  "(": "ALTCHAR 40",
+  ")": "ALTCHAR 41",
+  "*": "ALTCHAR 42",
+  "+": "ALTCHAR 43",
+  ",": "ALTCHAR 44",
+  "-": "ALTCHAR 45",
+  ".": "ALTCHAR 46",
+  "/": "ALTCHAR 47",
+  ":": "ALTCHAR 58",
+  ";": "ALTCHAR 59",
+  "<": "ALTCHAR 60",
+  "=": "ALTCHAR 61",
+  ">": "ALTCHAR 62",
+  "?": "ALTCHAR 63",
+  "@": "ALTCHAR 64",
+  "[": "ALTCHAR 91",
+  "\\": "ALTCHAR 92",
+  "]": "ALTCHAR 93",
+  "^": "ALTCHAR 94",
+  _: "ALTCHAR 95",
+  "`": "ALTCHAR 96",
+  "{": "ALTCHAR 123",
+  "|": "ALTCHAR 124",
+  "}": "ALTCHAR 125",
+  "~": "ALTCHAR 126",
 };
 
 function textToAltCodes(text: string, useAltCodes: boolean): string {
@@ -30,10 +106,10 @@ function textToAltCodes(text: string, useAltCodes: boolean): string {
     return `STRING ${text}\nDELAY 10`;
   }
 
-  let result = '';
+  let result = "";
   for (const char of text) {
     if (ALT_CODE_MAP[char]) {
-      result += ALT_CODE_MAP[char] + '\nDELAY 10\n';
+      result += ALT_CODE_MAP[char] + "\nDELAY 10\n";
     } else {
       result += `ALT ${char.charCodeAt(0)}\nDELAY 10\n`;
     }
@@ -43,44 +119,46 @@ function textToAltCodes(text: string, useAltCodes: boolean): string {
 
 function compileNode(node: Node): string {
   switch (node.type) {
-    case 'command':
-      return node.command || 'REM Empty command';
+    case "command":
+      return node.command || "REM Empty command";
 
-    case 'key_combination':
-      const modifiers = node.modifiers.join(' ');
-      const keys = node.keys.join(' ');
+    case "key_combination":
+      const modifiers = node.modifiers.join(" ");
+      const keys = node.keys.join(" ");
       if (!modifiers && !keys) {
-        return 'REM Empty key combination';
+        return "REM Empty key combination";
       }
       return modifiers ? `${modifiers} ${keys}` : keys;
 
-    case 'text_input':
-      return node.text ? textToAltCodes(node.text, node.useAltCodes) : 'REM Empty text input';
+    case "text_input":
+      return node.text
+        ? textToAltCodes(node.text, node.useAltCodes)
+        : "REM Empty text input";
 
-    case 'delay':
+    case "delay":
       return `DELAY ${node.duration || 0}`;
 
-    case 'loop':
-      let loopContent = '';
+    case "loop":
+      let loopContent = "";
       const iterations = node.iterations || 1;
       for (let i = 0; i < iterations; i++) {
         loopContent += `REM Loop iteration ${i + 1}\n`;
         for (const childNode of node.children) {
-          loopContent += compileNode(childNode) + '\n';
+          loopContent += compileNode(childNode) + "\n";
         }
       }
-      return loopContent.trim() || 'REM Empty loop';
+      return loopContent.trim() || "REM Empty loop";
 
-    case 'condition':
-      const condition = node.condition || 'empty condition';
+    case "condition":
+      const condition = node.condition || "empty condition";
       let condContent = `REM IF ${condition}\n`;
       for (const trueNode of node.trueNodes) {
-        condContent += compileNode(trueNode) + '\n';
+        condContent += compileNode(trueNode) + "\n";
       }
       if (node.falseNodes.length > 0) {
         condContent += `REM ELSE\n`;
         for (const falseNode of node.falseNodes) {
-          condContent += compileNode(falseNode) + '\n';
+          condContent += compileNode(falseNode) + "\n";
         }
       }
       condContent += `REM ENDIF`;
@@ -92,8 +170,8 @@ function compileNode(node: Node): string {
 }
 
 export function compileDuckyScript(script: DuckyScript): string {
-  let output = '';
-  
+  let output = "";
+
   output += `REM DuckyScript generated by HID-F\n`;
   output += `REM Script: ${script.metadata.name}\n`;
   output += `REM Description: ${script.metadata.description}\n`;
@@ -104,7 +182,7 @@ export function compileDuckyScript(script: DuckyScript): string {
 
   for (const node of sortedNodes) {
     const compiled = compileNode(node);
-    output += compiled + '\n';
+    output += compiled + "\n";
   }
 
   return output.trim();
@@ -132,7 +210,7 @@ function topologicalSort(nodes: Node[], connections: Connection[]): Node[] {
   }
 
   const result: Node[] = [];
-  const nodeMap = new Map(nodes.map(n => [n.id, n]));
+  const nodeMap = new Map(nodes.map((n) => [n.id, n]));
 
   while (queue.length > 0) {
     const nodeId = queue.shift()!;
@@ -150,7 +228,7 @@ function topologicalSort(nodes: Node[], connections: Connection[]): Node[] {
   }
 
   for (const node of nodes) {
-    if (!result.find(n => n.id === node.id)) {
+    if (!result.find((n) => n.id === node.id)) {
       result.push(node);
     }
   }
@@ -162,22 +240,22 @@ export function validateScript(script: DuckyScript): string[] {
   const errors: string[] = [];
 
   if (hasCycle(script.nodes, script.connections)) {
-    errors.push('Circular dependency detected in node connections');
+    errors.push("Circular dependency detected in node connections");
   }
 
   for (const node of script.nodes) {
     switch (node.type) {
-      case 'delay':
+      case "delay":
         if (node.duration < 0) {
           errors.push(`Delay node "${node.label}" has negative duration`);
         }
         break;
-      case 'loop':
+      case "loop":
         if (node.iterations < 1) {
           errors.push(`Loop node "${node.label}" has invalid iteration count`);
         }
         break;
-      case 'text_input':
+      case "text_input":
         if (!node.text.trim()) {
           errors.push(`Text input node "${node.label}" is empty`);
         }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -20,7 +20,7 @@
 }
 
 html {
-  font-family: 'Orbitron', 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "Orbitron", "JetBrains Mono", "Courier New", monospace;
   background: var(--cyber-bg);
 }
 
@@ -35,50 +35,55 @@ body {
 
 @layer utilities {
   .cyber-glow-red {
-    box-shadow: 
+    box-shadow:
       0 0 5px var(--cyber-red-glow),
       0 0 10px var(--cyber-red-glow),
       0 0 15px var(--cyber-red-glow),
       inset 0 0 5px rgba(255, 0, 60, 0.1);
   }
-  
+
   .cyber-glow-red-strong {
-    box-shadow: 
+    box-shadow:
       0 0 10px var(--cyber-red),
       0 0 20px var(--cyber-red),
       0 0 30px var(--cyber-red),
       0 0 40px var(--cyber-red-glow);
   }
-  
+
   .cyber-text-glow {
-    text-shadow: 
+    text-shadow:
       0 0 5px var(--cyber-red),
       0 0 10px var(--cyber-red),
       0 0 15px var(--cyber-red);
   }
-  
+
   .cyber-border {
     border: 1px solid var(--cyber-red);
     position: relative;
   }
-  
+
   .cyber-border::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -1px;
     left: -1px;
     right: -1px;
     bottom: -1px;
-    background: linear-gradient(45deg, var(--cyber-red), transparent, var(--cyber-red));
+    background: linear-gradient(
+      45deg,
+      var(--cyber-red),
+      transparent,
+      var(--cyber-red)
+    );
     z-index: -1;
     border-radius: inherit;
   }
-  
+
   .cyber-button {
     background: transparent;
     border: none;
     color: var(--cyber-red);
-    font-family: 'Orbitron', monospace;
+    font-family: "Orbitron", monospace;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -92,9 +97,9 @@ body {
     margin: 4px;
     min-width: fit-content;
   }
-  
+
   .cyber-button::before {
-    content: '[ ';
+    content: "[ ";
     position: absolute;
     left: 8px;
     top: 50%;
@@ -104,9 +109,9 @@ body {
     pointer-events: none;
     white-space: nowrap;
   }
-  
+
   .cyber-button::after {
-    content: ' ]';
+    content: " ]";
     position: absolute;
     right: 8px;
     top: 50%;
@@ -116,63 +121,61 @@ body {
     pointer-events: none;
     white-space: nowrap;
   }
-  
+
   .cyber-button span {
     position: relative;
     z-index: 2;
     min-width: 0;
     flex-shrink: 0;
   }
-  
+
   .cyber-button:hover {
     background: transparent;
     color: var(--cyber-text);
-    text-shadow: 
+    text-shadow:
       0 0 5px var(--cyber-red),
       0 0 10px var(--cyber-red),
       0 0 15px var(--cyber-red);
     transform: translateY(-1px);
   }
-  
+
   .cyber-button:hover svg {
-    filter: 
-      drop-shadow(0 0 5px var(--cyber-red))
+    filter: drop-shadow(0 0 5px var(--cyber-red))
       drop-shadow(0 0 10px var(--cyber-red))
       drop-shadow(0 0 15px var(--cyber-red));
   }
-  
+
   .cyber-button:active {
     transform: translateY(0);
     color: var(--cyber-text);
-    text-shadow: 
+    text-shadow:
       0 0 8px var(--cyber-red),
       0 0 16px var(--cyber-red);
   }
-  
+
   .cyber-button:active svg {
-    filter: 
-      drop-shadow(0 0 8px var(--cyber-red))
+    filter: drop-shadow(0 0 8px var(--cyber-red))
       drop-shadow(0 0 16px var(--cyber-red));
   }
-  
+
   .cyber-input {
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid var(--cyber-red);
     color: var(--cyber-text);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
     padding: 8px 12px;
     transition: all 0.3s ease;
     border-radius: 0;
   }
-  
+
   .cyber-input:focus {
     outline: none;
     border-color: var(--cyber-red);
-    box-shadow: 
+    box-shadow:
       0 0 10px rgba(255, 0, 60, 0.5),
       inset 0 0 5px rgba(255, 0, 60, 0.1);
   }
-  
+
   .cyber-checkbox {
     appearance: none;
     width: 18px;
@@ -181,7 +184,7 @@ body {
     background: transparent;
     position: relative;
     cursor: pointer;
-    font-family: 'Orbitron', monospace;
+    font-family: "Orbitron", monospace;
     font-weight: 600;
     font-size: 12px;
     color: var(--cyber-red);
@@ -190,62 +193,70 @@ body {
     justify-content: center;
     transition: all 0.3s ease;
   }
-  
+
   .cyber-checkbox::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Orbitron', monospace;
+    font-family: "Orbitron", monospace;
     font-weight: 600;
     font-size: 10px;
     color: var(--cyber-red);
   }
-  
+
   .cyber-checkbox:checked::before {
-    content: '✓';
+    content: "✓";
   }
-  
+
   .cyber-checkbox:hover {
     box-shadow: 0 0 5px rgba(255, 0, 60, 0.5);
   }
-  
+
   .cyber-modal {
     background: rgba(10, 10, 10, 0.5);
     backdrop-filter: blur(10px);
     border: 1px solid var(--cyber-red);
-    box-shadow: 
+    box-shadow:
       0 0 30px rgba(255, 0, 60, 0.3),
       inset 0 0 30px rgba(255, 0, 60, 0.05);
   }
-  
+
   .cyber-glass {
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 0, 60, 0.3);
   }
-  
+
   .cyber-panel {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 26, 0.8) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(26, 26, 26, 0.8) 100%
+    );
     position: relative;
   }
-  
+
   .cyber-panel::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, var(--cyber-red) 50%, transparent 100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--cyber-red) 50%,
+      transparent 100%
+    );
   }
-  
-  
+
   .cyber-grid {
-    background-image: 
+    background-image:
       linear-gradient(rgba(255, 0, 60, 0.1) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 0, 60, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
@@ -263,7 +274,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--cyber-red) 0%, var(--cyber-red-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--cyber-red) 0%,
+    var(--cyber-red-dark) 100%
+  );
   border-radius: 2px;
   border: 1px solid rgba(255, 0, 60, 0.5);
 }
@@ -283,65 +298,78 @@ body {
 }
 
 @keyframes scan {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 @keyframes glitch {
-  0%, 100% { 
+  0%,
+  100% {
     transform: translate(0);
     opacity: 1;
   }
-  10% { 
+  10% {
     transform: translate(-1px, 0.5px);
     opacity: 0.8;
   }
-  20% { 
+  20% {
     transform: translate(1px, -0.5px);
     opacity: 0.9;
   }
-  30% { 
+  30% {
     transform: translate(-0.5px, 1px);
     opacity: 0.7;
   }
-  40% { 
+  40% {
     transform: translate(0.5px, -1px);
     opacity: 0.85;
   }
-  50% { 
+  50% {
     transform: translate(-1px, -0.5px);
     opacity: 0.6;
   }
-  60% { 
+  60% {
     transform: translate(1px, 0.5px);
     opacity: 0.9;
   }
-  70% { 
+  70% {
     transform: translate(-0.5px, -0.5px);
     opacity: 0.8;
   }
-  80% { 
+  80% {
     transform: translate(0.5px, 1px);
     opacity: 0.7;
   }
-  90% { 
+  90% {
     transform: translate(-1px, 0.5px);
     opacity: 0.9;
   }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { 
+  0%,
+  100% {
     box-shadow: 0 0 5px rgba(255, 0, 60, 0.5);
   }
-  50% { 
-    box-shadow: 0 0 20px rgba(255, 0, 60, 0.8), 0 0 30px rgba(255, 0, 60, 0.4);
+  50% {
+    box-shadow:
+      0 0 20px rgba(255, 0, 60, 0.8),
+      0 0 30px rgba(255, 0, 60, 0.4);
   }
 }
 
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 @keyframes slideDown {
@@ -402,9 +430,13 @@ body {
 }
 
 .cyber-node {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 26, 0.9) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(26, 26, 26, 0.9) 100%
+  );
   border: 1px solid rgba(255, 0, 60, 0.3);
-  box-shadow: 
+  box-shadow:
     0 0 5px rgba(255, 0, 60, 0.1),
     inset 0 0 5px rgba(255, 0, 60, 0.03);
   transition: all 0.3s ease;
@@ -412,7 +444,7 @@ body {
 
 .cyber-node:hover {
   border-color: rgba(255, 0, 60, 0.5);
-  box-shadow: 
+  box-shadow:
     0 0 10px rgba(255, 0, 60, 0.2),
     inset 0 0 8px rgba(255, 0, 60, 0.05);
   transform: translateY(-1px);
@@ -420,7 +452,7 @@ body {
 
 .cyber-node.selected {
   border-color: var(--cyber-yellow);
-  box-shadow: 
+  box-shadow:
     0 0 15px rgba(255, 255, 0, 0.3),
     inset 0 0 10px rgba(255, 255, 0, 0.05);
 }
@@ -430,7 +462,7 @@ body {
 }
 
 .cyber-title {
-  font-family: 'Orbitron', monospace;
+  font-family: "Orbitron", monospace;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -438,12 +470,12 @@ body {
 }
 
 .cyber-text {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-weight: 400;
 }
 
 .cyber-label {
-  font-family: 'Orbitron', monospace;
+  font-family: "Orbitron", monospace;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -484,11 +516,11 @@ body {
   .cyber-button {
     border-width: 2px;
   }
-  
+
   .cyber-node {
     border-width: 2px;
   }
-  
+
   .cyber-input {
     border-width: 2px;
   }
@@ -498,12 +530,12 @@ body {
   .no-print {
     display: none !important;
   }
-  
+
   body {
     background: white !important;
     color: black !important;
   }
-  
+
   .cyber-node {
     background: white !important;
     border: 2px solid black !important;
