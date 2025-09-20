@@ -6,6 +6,7 @@
 
   export let node: Node | null;
   export let isOpen = false;
+  export let isFlipperMode = false;
 
   const dispatch = createEventDispatcher();
 
@@ -281,7 +282,7 @@
 
 {#if isOpen && node}
   <div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 cyber-fade-in" on:mousedown={handleOverlayMouseDown} on:click={handleOverlayClick}>
-    <div class="cyber-modal cyber-modal-enter p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto" on:click|stopPropagation>
+    <div class="cyber-modal cyber-modal-enter p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto {isFlipperMode ? 'flipper-mode' : ''}" on:click|stopPropagation>
       <div class="flex justify-between items-center mb-6">
         <h2 class="cyber-title text-xl cyber-text-glow">[ EDIT {localNode.type.replace('_', ' ').toUpperCase()} NODE ]</h2>
         <button 
@@ -346,7 +347,7 @@
                 <div class="flex items-center space-x-2">
                   <select
                     bind:value={localNode.modifiers[index]}
-                    class="px-3 py-2 bg-gray-800 border border-red-900 rounded text-red-300 focus:border-red-600 focus:outline-none"
+                    class="cyber-select flex-1"
                   >
                     {#each modifierOptions as option}
                       <option value={option}>{option}</option>
@@ -382,7 +383,7 @@
                 <div class="flex items-center space-x-2">
                   <select
                     bind:value={localNode.keys[index]}
-                    class="px-3 py-2 bg-gray-800 border border-red-900 rounded text-red-300 focus:border-red-600 focus:outline-none"
+                    class="cyber-select flex-1"
                   >
                     {#each keyOptions as option}
                       <option value={option}>{option}</option>
@@ -440,7 +441,7 @@
               bind:value={localNode.duration}
               min="0"
               step="100"
-              class="cyber-input w-full"
+              class="cyber-number-input w-full"
               placeholder="1000"
             />
           </div>
@@ -452,7 +453,7 @@
               type="number"
               bind:value={localNode.iterations}
               min="1"
-              class="cyber-input w-full"
+              class="cyber-number-input w-full"
               placeholder="3"
             />
           </div>

@@ -5,6 +5,7 @@
 
   export let script: DuckyScript;
   export let isOpen = false;
+  export let isFlipperMode = false;
 
   const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?~`№§';
   
@@ -121,9 +122,17 @@
   let overlayMouseDownTarget: EventTarget | null = null;
   let isEditingName = false;
   let nameDisplayElement: HTMLElement;
+  let isFilenameManuallyEdited = false;
   
   $: if (script && !isOpen) {
     localMetadata = { ...script.metadata };
+    // Reset filename edit state when opening modal
+    isFilenameManuallyEdited = false;
+  }
+
+  $: if (isOpen) {
+    // Reset filename edit state when modal opens
+    isFilenameManuallyEdited = false;
   }
 
   $: if (isOpen && nameInput && isEditingName) {
@@ -166,6 +175,11 @@
     }
   }
 
+  function handleFilenameInput() {
+    // Mark filename as manually edited when user types in it
+    isFilenameManuallyEdited = true;
+  }
+
   function handleOverlayMouseDown(event: MouseEvent) {
     overlayMouseDownTarget = event.target;
   }
@@ -197,8 +211,13 @@
   }
 
   $: {
-    if (localMetadata.name && localMetadata.filename === script.metadata.filename) {
-      localMetadata.filename = generateFilename(localMetadata.name);
+    // Only auto-update filename if it hasn't been manually edited
+    if (localMetadata.name && !isFilenameManuallyEdited) {
+      const generatedFilename = generateFilename(localMetadata.name);
+      // Only update if the current filename is empty or matches the original generated filename
+      if (!localMetadata.filename || localMetadata.filename === script.metadata.filename) {
+        localMetadata.filename = generatedFilename;
+      }
     }
   }
 </script>
@@ -215,7 +234,7 @@
     tabindex="-1"
   >
     <div 
-      class="cyber-modal cyber-modal-enter p-6 w-full max-w-md mx-4" 
+      class="cyber-modal cyber-modal-enter p-6 w-full max-w-md mx-4 {isFlipperMode ? 'flipper-mode' : ''}" 
       on:click|stopPropagation
       on:keydown|stopPropagation
       role="document"
@@ -275,6 +294,7 @@
               id="script-filename"
               bind:value={localMetadata.filename}
               on:keydown={handleKeyDown}
+              on:input={handleFilenameInput}
               type="text"
               placeholder="SCRIPT_FILENAME"
               class="cyber-input flex-1"

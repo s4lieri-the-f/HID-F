@@ -6,6 +6,9 @@
 
   export let script: DuckyScript;
   export let isOpen = false;
+  export let settings: { defaultDelay: number; duckyVersion: number } = { defaultDelay: 10, duckyVersion: 3 };
+  export let hasValidationErrors = false;
+  export let isFlipperMode = false;
 
   const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?~`№§';
   
@@ -145,8 +148,12 @@
 
   function updatePreview() {
     if (script && isOpen) {
-      compiledScript = compileDuckyScript(script);
       validationErrors = validateScript(script);
+      if (!hasValidationErrors) {
+        compiledScript = compileDuckyScript(script, settings);
+      } else {
+        compiledScript = 'Cannot compile script with validation errors. Please fix the errors first.';
+      }
     }
   }
 
@@ -157,7 +164,7 @@
 
 {#if isOpen}
   <div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 cyber-fade-in" on:mousedown={handleOverlayMouseDown} on:click={handleOverlayClick}>
-    <div class="cyber-modal cyber-modal-enter max-w-4xl w-full mx-4 max-h-[90vh] flex flex-col" on:click|stopPropagation>
+    <div class="cyber-modal cyber-modal-enter max-w-4xl w-full mx-4 max-h-[90vh] flex flex-col {isFlipperMode ? 'flipper-mode' : ''}" on:click|stopPropagation>
       <div class="flex justify-between items-center p-6 border-b border-red-900">
         <div>
           <h2 class="text-xl font-bold text-red-300">Script Preview</h2>
