@@ -192,9 +192,7 @@
               on:click={copyToClipboard}
               on:mouseenter={handleButtonHover}
               on:mouseleave={handleButtonLeave}
-              on:mouseenter={handleButtonHover}
-            on:mouseleave={handleButtonLeave}
-            class="cyber-button"
+              class="cyber-button"
             >
               {#if copySuccess}
                 <CheckCircle size={16} />
