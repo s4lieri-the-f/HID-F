@@ -4,7 +4,6 @@ FROM base AS builder
 RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
 
-ENV NODE_ENV=production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 RUN npm config set audit false && \
@@ -15,15 +14,19 @@ RUN npm config set audit false && \
     npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000
 
-COPY package.json package-lock.json* ./
+COPY package.json package-lock.json* .npmrc* ./
 RUN echo "Installing dependencies in builder..." && \
-    timeout 600 npm ci --no-audit --silent --prefer-offline --maxsockets 1 && \
-    echo "Dependencies installed successfully"
+    timeout 600 npm install --no-audit --silent --prefer-offline --maxsockets 1 && \
+    echo "Dependencies installed successfully" && \
+    echo "Checking node_modules..." && \
+    ls -la node_modules/.bin/ | grep vite && \
+    echo "Checking if vite is available..." && \
+    npx vite --version
 
 COPY . .
 
 RUN echo "Starting build process..." && \
-    timeout 300 npm run build || (echo "Build timed out after 5 minutes" && exit 1) && \
+    timeout 300 npx vite build || (echo "Build timed out after 5 minutes" && exit 1) && \
     echo "Build completed successfully"
 
 FROM base AS runner
