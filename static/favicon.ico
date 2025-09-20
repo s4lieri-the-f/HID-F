@@ -1,10 +1,1 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="12" fill="url(#gradient)"/>
-  <text x="32" y="42" text-anchor="middle" font-size="28" fill="white">🦆</text>
-  <defs>
-    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3B82F6"/>
-      <stop offset="100%" style="stop-color:#8B5CF6"/>
-    </linearGradient>
-  </defs>
-</svg>
+data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY3liZXJHcmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMGZmZmY7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZmYwMGZmO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMGZmMDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ1cmwoI2N5YmVyR3JhZGllbnQpIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuOCIvPgogIDxyZWN0IHg9IjgiIHk9IjYiIHdpZHRoPSIzIiBoZWlnaHQ9IjIwIiBmaWxsPSJ1cmwoI2N5YmVyR3JhZGllbnQpIi8+CiAgPHJlY3QgeD0iOCIgeT0iNiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjMiIGZpbGw9InVybCgjY3liZXJHcmFkaWVudCkiLz4KICA8cmVjdCB4PSI4IiB5PSIxMyIgd2lkdGg9IjgiIGhlaWdodD0iMyIgZmlsbD0idXJsKCNjeWJlckdyYWRpZW50KSIvPgo8L3N2Zz4K
