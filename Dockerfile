@@ -1,7 +1,6 @@
 FROM node:latest AS base
 
 FROM base AS builder
-RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
