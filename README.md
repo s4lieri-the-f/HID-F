@@ -1,7 +1,9 @@
 # HID-F Payload Generator
 
 [![Build and Release](https://github.com/s4lieri-the-f/HID-F/actions/workflows/build-and-release.yml/badge.svg?branch=master)](https://github.com/s4lieri-the-f/HID-F/actions/workflows/build-and-release.yml)
+[![Deploy to GitHub Pages](https://github.com/s4lieri-the-f/HID-F/actions/workflows/deploy-pages.yml/badge.svg?branch=master)](https://github.com/s4lieri-the-f/HID-F/actions/workflows/deploy-pages.yml)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://hub.docker.com/r/s4lier1/hid-f)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=flat&logo=github&logoColor=white)](https://s4lieri-the-f.github.io/HID-F/)
 
 *Client-side web application for low-code DuckyScript compilation with visual node-based programming interface.*
 
@@ -24,6 +26,9 @@
 - **Docker Ready** - Easy deployment with Docker containers
 
 ## Quick Start
+
+### Live Demo
+🌐 **[Try it online](https://s4lieri-the-f.github.io/HID-F/)**
 
 ### Using Docker
 
@@ -58,6 +63,14 @@ npm run dev
 # Build for production
 npm run build
 ```
+
+### GitHub Pages Deployment
+
+The app is automatically deployed to GitHub Pages on every push to the `master` branch:
+
+- **Live URL**: https://s4lieri-the-f.github.io/HID-F/
+- **Deployment**: Automatic via GitHub Actions
+- **Build**: Static files generated with SvelteKit
 
 ## Project Structure
 

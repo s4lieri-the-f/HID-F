@@ -8,7 +8,9 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:pages": "NODE_ENV=production vite build",
+    "test:pages": "./scripts/test-pages-build.sh"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.0",
