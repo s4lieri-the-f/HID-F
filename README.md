@@ -27,8 +27,7 @@
 
 ## Quick Start
 
-### Live Demo
-🌐 **[Try it online](https://s4lieri-the-f.github.io/HID-F/)**
+### **[Try it online](https://s4lieri-the-f.github.io/HID-F/)**
 
 ### Using Docker
 
