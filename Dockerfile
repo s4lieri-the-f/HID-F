@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:latest AS base
 
 FROM base AS builder
 RUN apk add --no-cache libc6-compat python3 make g++
@@ -16,12 +16,7 @@ RUN npm config set audit false && \
 
 COPY package.json package-lock.json* .npmrc* ./
 RUN echo "Installing dependencies in builder..." && \
-    timeout 600 npm install --no-audit --silent --prefer-offline --maxsockets 1 && \
-    echo "Dependencies installed successfully" && \
-    echo "Checking node_modules..." && \
-    ls -la node_modules/.bin/ | grep vite && \
-    echo "Checking if vite is available..." && \
-    npx vite --version
+    timeout 600 npm install --no-audit --silent --prefer-offline --maxsockets 1
 
 COPY . .
 
@@ -29,25 +24,30 @@ RUN echo "Starting build process..." && \
     timeout 300 npx vite build || (echo "Build timed out after 5 minutes" && exit 1) && \
     echo "Build completed successfully"
 
-FROM base AS runner
-WORKDIR /app
+FROM nginx:alpine AS runner
 
-ENV NODE_ENV=production
+COPY --from=builder /app/build /usr/share/nginx/html
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 sveltekit
+RUN echo 'server { \
+    listen 80; \
+    server_name localhost; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+    \
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ { \
+        expires 1y; \
+        add_header Cache-Control "public, immutable"; \
+    } \
+    \
+    add_header X-Frame-Options "SAMEORIGIN" always; \
+    add_header X-Content-Type-Options "nosniff" always; \
+    add_header X-XSS-Protection "1; mode=block" always; \
+}' > /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /app/build ./build
-COPY --from=builder /app/package.json ./package.json
+EXPOSE 80
 
-RUN npm ci --only=production --no-audit --silent --maxsockets 1 && npm cache clean --force
-
-RUN chown -R sveltekit:nodejs /app
-USER sveltekit
-
-EXPOSE 3000
-
-ENV PORT=3000
-ENV HOST=0.0.0.0
-
-CMD ["node", "build"]
+CMD ["nginx", "-g", "daemon off;"]

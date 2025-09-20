@@ -112,24 +112,8 @@ jobs:
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
           \`\`\`
-
-          ## Quick Start
-          \`\`\`bash
-          # Run with latest version
-          docker run -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-
-          # Run with specific version
-          docker run -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
-          \`\`\`
-
-          ## Container Details
-          - **Image Size**: Optimized multi-stage build
-          - **Base Image**: Node.js 20 Alpine
-          - **Port**: 3000
-          - **Environment**: Production
           EOF
-
-          # Set output for release body
+          
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           cat CHANGELOG.md >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
